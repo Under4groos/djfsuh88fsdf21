@@ -5,7 +5,7 @@ function PANEL:Init()
     self:Center()
 end
 function PANEL:Paint( w, h )
-    draw.RoundedBox( 0, 0, 0, w, h, Color(0,0,0,100) )
+    draw.RoundedBox( 0, 0, 0, w, h, Color(145,145,145,100) )
 end
 vgui.Register( "UnderFrameScoreboard", PANEL, "DPanel" )
 
