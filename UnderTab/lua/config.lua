@@ -1,8 +1,8 @@
 config = {}
     config.Active = true      
     config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
-    config.sizePanel = 0 , 36 
-      
+    config.sizePanel = {25 , 75 }
+
 PAnels = {}
 
 UnderFrameScoreboard = {}
