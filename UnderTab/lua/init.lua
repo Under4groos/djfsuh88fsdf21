@@ -6,7 +6,8 @@ function TAB.scoreboardCreationFrame()
         TAB.vguiFrame:SetSize(config.sizeFrame[1],config.sizeFrame[2] )
         TAB.vguiFrame:MakePopup()
         for _,k in pairs( player.GetAll() ) do 
-           fun.AddPlayerPanel( TAB.vguiFrame.Scroll , "UnderPlayerPanelScoreboard" , _ , fun.GetSizeX( TAB.vguiFrame ))
+           fun.AddPlayerPanel( TAB.vguiFrame.Scroll , "UnderPlayerPanelScoreboard" , _ , fun.GetSizeX( TAB.vguiFrame ) , k )
+
         end 
         return config.Active 
     end 
