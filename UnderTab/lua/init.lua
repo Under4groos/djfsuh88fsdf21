@@ -5,7 +5,7 @@ TAB = TAB or {}
 function TAB.scoreboardCreationFrame()
     fun.OpenLastSetting( "scoreboardsetting.txt" ) 
     if config.Active then 
-        config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
+        config.sizeFrame =  config.sizeFrame or {ScrW() * 0.75, ScrH() * 0.75}
         
         TAB.vguiFrame = vgui.Create("UnderFrameScoreboard")
         TAB.vguiFrame:SetSize(config.sizeFrame[1],config.sizeFrame[2] )

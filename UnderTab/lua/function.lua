@@ -104,10 +104,12 @@ end
 function fun.SaveSetting( ...  )
     local Table_ = {...}
     --Table_[1] - Название файла 
-    local IsValidFile = file.Exists("data/"..Table_[1], "GAME")  
-    print( config[Table_[2]] )  
-    config[Table_[2]] = Table_[3]
-    print( config[Table_[2]] ) 
+    local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
+    if Table_[2] then  
+        print( config[Table_[2]] )  
+        config[Table_[2]] = Table_[3]
+        print( config[Table_[2]] ) 
+    end 
     if not IsValidFile then      
         local json_ = util.TableToJSON( config ) 
         file.Append( Table_[1] , json_ )
@@ -127,13 +129,8 @@ function fun.OpenLastSetting( ... )
             local json_ = util.JSONToTable(Text_)        
             for _,k in pairs(json_) do               
                 if type(k) == "table" then 
-                    for __,k_ in pairs(k) do 
-                        --## Надо дописать но мне лень ><   
-                        if _ == 1 then 
-
-                        else 
-
-                        end                  
+                    for __,k_ in pairs(k) do                      
+                        config[_][__] = k_                         
                     end 
                 else 
                     config.Active = k 
@@ -141,5 +138,7 @@ function fun.OpenLastSetting( ... )
             end 
 
         end 
+    else 
+        fun.SaveSetting( "scoreboardsetting.txt")
     end 
 end 

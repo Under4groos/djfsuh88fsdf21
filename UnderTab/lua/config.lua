@@ -2,7 +2,7 @@ config = {}
     config.Active = true        
     config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
     config.sizePanel = {35 , 75 }
-   -- config.sizePanelIndent = 5
+  
 
 PAnels = {}
 
