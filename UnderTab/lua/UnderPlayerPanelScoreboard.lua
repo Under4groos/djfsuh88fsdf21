@@ -5,7 +5,7 @@ function PANEL:Init()
     self:SetPos(0,0)
     self:SetText("")
     self.Avatar = vgui.Create( "AvatarImage", self )
-    self.Avatar:SetSize( config.sizePanel[1] , config.sizePanel[1] )
+    self.Avatar:SetSize( config.sizePanel[1] , config.sizePanel[1]  )
     self.Avatar:SetAlpha(200)
 
     self.buttonUrl = vgui.Create( "DButton", self.Avatar )
@@ -30,6 +30,7 @@ function PANEL:Init()
 end
 
 function PANEL:SetPalayer( player_ , size )
+    
     self.Avatar:SetPlayer( player_ , size )
     self.Avatar:SetSize( size , size )
     self.buttonUrl:SetSize( size , size )
@@ -38,7 +39,7 @@ function PANEL:SetPalayer( player_ , size )
     local x = fun.GetSizeTextX( "Name" , "  Name: "..player_:Name()  )
     self.name:SetSize(x + 10,font.size + 5)	
     self.name:SetText( "  Name: ".. player_:Name() )
-    self.name:SetPos(10 + size,0 )
+    self.name:SetPos( 5 + size,0 )
     self.name.Paint = function(self,w,h)
         draw.RoundedBox(0,0,0,w,h, Color_rank ) 
     end 
@@ -56,10 +57,43 @@ function PANEL:SetPalayer( player_ , size )
         end 
     end
     
+    -- count prop 
+    local text_ = stringName_[1][1] .. tostring(player_:GetCount( stringName_[1][2] ))
+    local x = fun.GetSizeTextX( "Name" , text_  )
+    self.count_prop = vgui.Create( "DButton", self ) 
+    self.count_prop:SetText( text_ )
+    self.count_prop:SetFont("Name")
+    self.count_prop:SetPos( 0 , config.sizePanel[2] - 25 )					
+    self.count_prop:SetSize(  x + 20 , 30 )					
+    self.count_prop.DoClick = function()				
+        MsgC( Color( 255,255,255,255) , "Name: \""..player_:Name() .. "\" "..text_.."\n" )		
+    end
+    self.count_prop.Paint = function(self,w,h)
+        draw.RoundedBox(0,0,0,w,h, Color(200,200,200,255) ) 
+    end  
+    self.count_prop:SetTextColor( Color(0,0,0,255) ) 
+
+    -- count prop 
+    local text_ = stringName_[2][1] .. tostring(player_:GetCount( stringName_[2][2] ))
+    x = x + fun.GetSizeTextX( "Name" , text_  )
+    self.count_npc = vgui.Create( "DButton", self ) 
+    self.count_npc:SetText( text_ )
+    self.count_npc:SetFont("Name")
+    self.count_npc:SetPos( x , config.sizePanel[2] - 25 )					
+    self.count_npc:SetSize(  x  , 30 )					
+    self.count_npc.DoClick = function()				
+        MsgC( Color( 255,255,255,255) , "Name: \""..player_:Name() .. "\" "..text_.."\n" )		
+    end
+    self.count_npc.Paint = function(self,w,h)
+        draw.RoundedBox(0,0,0,w,h, Color(200,200,200,255) ) 
+    end  
+    self.count_npc:SetTextColor( Color(0,0,0,255) ) 
 
 
 end 
 function PANEL:IMGSetSize( size )
+    self.name:SetPos( 5 + size,0 )
+    self.rank:SetPos( (20+size) + self.name:GetWide() ,0 )
     self.Avatar:SetSize( size , size )
     self.buttonUrl:SetSize( size , size )
 end 

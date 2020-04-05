@@ -1,7 +1,9 @@
 ///////////
 
 fun = {}
-fun.table = {}
+fun.PanelsButton = {}
+
+
 fun.ButtonActive = {}
 
 
@@ -54,18 +56,8 @@ function fun.GetSizeX( panel )
     return x or 15
 end 
 
-function fun.addPanelInfoCount( ... )
-    if not IsValid( Table_[1] ) then return end 
-    local parent = Table_[1]
 
-
-
-
-
-
-end 
-
---# 1 table 2 player 3 pos 
+--# Добавление панелей в  DScrollPanel панель 
 function fun.AddPlayerPanel( ... )
     local Table_ = {...}
     local Size_ = 0
@@ -76,29 +68,40 @@ function fun.AddPlayerPanel( ... )
         panel:SetPos( 0 , 10 +  Table_[3] * config.sizePanel[1]  )
         panel:SetPalayer( Table_[5] , config.sizePanel[1] )  
         fun.ButtonActive[Table_[3]] = false  
-        fun.table[Table_[3]] = panel
-        fun.table[Table_[3]].DoClick  = function()
+        fun.PanelsButton[Table_[3]] = panel
+        fun.PanelsButton[Table_[3]].DoClick  = function()
             fun.ButtonActive[Table_[3]] = not fun.ButtonActive[Table_[3]]
             if fun.ButtonActive[Table_[3]] then         
                 Size_ = config.sizePanel[2]
-                 fun.table[Table_[3]]:IMGSetSize( Size_ /2 )
+                 fun.PanelsButton[Table_[3]]:IMGSetSize( Size_ /2 + 8 )
             else 
                 Size_ = config.sizePanel[1]
-                 fun.table[Table_[3]]:IMGSetSize( Size_  )
+                fun.PanelsButton[Table_[3]]:IMGSetSize( Size_  )
             end     
-            fun.table[Table_[3]]:SetSize( x , Size_ ) 
-        end      
+            fun.PanelsButton[Table_[3]]:SetSize( x , Size_ ) 
+        end  
     end    
 end
 
+-- Сохранение настроек ебучей уебищной панели 
+function fun.isMyFileDir( name )
+    local IsValidFile = file.Exists( name or "UnderScoreboard", "DATA")
+    if IsValidFile then 
+        return true 
+    else 
+        file.CreateDir( name or "UnderScoreboard" )
+        return true 
+    end  
+end
 
 function fun.SaveSetting( ... )
     local Table_ = {...}
-    --Table_[1] - Название файла 
-    local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
-    if Table_[3] then         
+    fun.isMyFileDir()
+    local IsValidFile = file.Exists( Table_[1], "DATA") 
+    if #Table_ >= 2 then         
         config[Table_[2]] = Table_[3]     
     end 
+
     if not IsValidFile then      
         local json_ = util.TableToJSON( config ) 
         file.Append( Table_[1] , json_ )
@@ -111,7 +114,8 @@ end
 
 function fun.ResetSetting( ... )
     local Table_ = {...}
-    local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
+    fun.isMyFileDir()
+    local IsValidFile = file.Exists(Table_[1], "DATA") 
     config.Active = true        
     config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
     config.sizePanel = {35 , 75 }
@@ -127,7 +131,8 @@ end
 
 function fun.OpenLastSetting( ... ) 
     local Table_ = {...}
-    local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
+    fun.isMyFileDir()
+    local IsValidFile = file.Exists(Table_[1], "DATA") 
     if IsValidFile then
         local Text_ = file.Read( Table_[1] , "DATA" )
         if string.len(Text_) > string.len("{\"sizeFrame\":[0.0,0.0],\"sizePanel\":[0.0,0.0],\"Active\":true}") then 
@@ -143,6 +148,6 @@ function fun.OpenLastSetting( ... )
             end 
         end 
     else 
-        fun.SaveSetting( "scoreboardsetting.txt")
+        fun.SaveSetting( Table_[1] )
     end 
 end 

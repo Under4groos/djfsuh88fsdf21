@@ -6,12 +6,12 @@ function PANEL:Init()
     self.Scroll:SetSize(self:GetWide() + 20,self:GetTall())   
 end
 function PANEL:Add( panel )
-    self.Scroll:Add( panel )
+    self.Scroll:Add( panel )  
 end
-local I = 0
-local I_ = 1
-local Dis = 9 
-local TableSize = {}
+function PANEL:ScrollSetSize()
+    self.Scroll:SetSize(self:GetWide() + 20,self:GetTall()) 
+    self:Center()
+end 
 function PANEL:Paint( w, h )
     draw.RoundedBox( 0, 0, 0, w, h, UnderFrameScoreboard.color or Color(145,145,145,0) )    
 end
