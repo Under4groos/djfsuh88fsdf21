@@ -13,8 +13,8 @@ function PANEL:ScrollSetSize()
     self.Scroll:SetSize(self:GetWide() + 20,self:GetTall())  
     
 end 
-function PANEL:Paint( w, h )
-    draw.RoundedBox( 0, 0, 0, w, h, UnderFrameScoreboard.color or Color(145,145,145,0) )    
+function PANEL:Paint( w, h )   
+    draw.RoundedBox( 0, 0, 0, w, h, UnderFrameScoreboard.color )    
 end
 vgui.Register( "UnderFrameScoreboard", PANEL, "DPanel" )
 
