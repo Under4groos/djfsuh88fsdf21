@@ -1,14 +1,12 @@
 
 TAB = TAB or {}
 
-
 function TAB.scoreboardCreationFrame()
     fun.OpenLastSetting( "scoreboardsetting.txt" ) 
-    if config.Active then 
-        config.sizeFrame =  config.sizeFrame or {ScrW() * 0.75, ScrH() * 0.75}
-        
+    if config.Active then  
         TAB.vguiFrame = vgui.Create("UnderFrameScoreboard")
         TAB.vguiFrame:SetSize(config.sizeFrame[1],config.sizeFrame[2] )
+        print( config.sizeFrame[1],config.sizeFrame[2] )
         TAB.vguiFrame:MakePopup()
         for _,k in pairs( player.GetAll() ) do 
            fun.AddPlayerPanel( TAB.vguiFrame.Scroll , "UnderPlayerPanelScoreboard" , _ , fun.GetSizeX( TAB.vguiFrame ) , k )
@@ -40,7 +38,6 @@ function TAB.run()
     end 
 end
 
-
 function TAB.scoreboardCloseFrame()
     if not ( IsValid(TAB.vguiFrame) ) then return end 
     TAB.vguiFrame:Remove()
@@ -51,11 +48,9 @@ for _ , k in pairs({
     {"ScoreboardShow","ShowScoreboard",TAB.scoreboardCreationFrame},
     {"ScoreboardHide","HideScoreboard",TAB.scoreboardCloseFrame},
     {"Think" , "TAB.run" , TAB.run }
-
     }) do 
     hook.Add( k[1] , k[2] , k[3] ) 
 end 
-
 
 concommand.Add("scoreboardug", function( ply, cmd, args )
     if ply == LocalPlayer() then 
@@ -68,5 +63,19 @@ concommand.Add("scoreboardug", function( ply, cmd, args )
         else 
             Msg(" 1 / 0 ") 
         end        
+    end
+end)
+
+concommand.Add("scoreboardug_size", function( ply, cmd, args )
+    if ply == LocalPlayer() then 
+        if args[1] and args[2] then
+            fun.SaveSetting( "scoreboardsetting.txt" , "sizeFrame" , { tonumber(args[1]) , tonumber(args[2])   }   )
+        end 
+    end
+end)
+
+concommand.Add("scoreboardug_reset", function( ply, cmd, args )
+    if ply == LocalPlayer() then 
+        fun.ResetSetting( "scoreboardsetting.txt"  )
     end
 end)

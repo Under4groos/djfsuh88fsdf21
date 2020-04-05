@@ -82,30 +82,11 @@ function fun.AddPlayerPanel( ... )
 end
 
 
-
--- function fun.SaveSetting( ... )
---     local Table_ = {...}
---     --Table_[1] - Название файла 
---     local IsValidFile = file.Exists("data/"..Table_[1], "GAME")    
-
---     if not IsValidFile then
---         local json_ = util.TableToJSON( config ) 
---         file.Append( Table_[1] , json_ )
---     else 
---         local Text_ = file.Read( Table_[1] , "DATA" )
---         if string.len(Text_) > 10 then 
---             local json_ = util.JSONToTable( Text_ )
---             config.Active = json_["Active"]
---         end 
---     end 
--- end 
-
-
 function fun.SaveSetting( ...  )
     local Table_ = {...}
     --Table_[1] - Название файла 
     local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
-    if Table_[2] then  
+    if Table_[3] then  
         print( config[Table_[2]] )  
         config[Table_[2]] = Table_[3]
         print( config[Table_[2]] ) 
@@ -120,23 +101,38 @@ function fun.SaveSetting( ...  )
     end 
 end 
 
+function fun.ResetSetting( ...  )
+    local Table_ = {...}
+    local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
+    config.Active = true        
+    config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
+    config.sizePanel = {35 , 75 }
+    if not IsValidFile then      
+        local json_ = util.TableToJSON( config ) 
+        file.Append( Table_[1] , json_ )
+    else 
+        local json_ = util.TableToJSON( config ) 
+        file.Delete( Table_[1] )
+        file.Append( Table_[1] , json_ )    
+    end 
+end
+
 function fun.OpenLastSetting( ... ) 
     local Table_ = {...}
     local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
     if IsValidFile then
         local Text_ = file.Read( Table_[1] , "DATA" )
-        if string.len(Text_) > 10 then 
+        if string.len(Text_) > string.len("{\"sizeFrame\":[0.0,0.0],\"sizePanel\":[0.0,0.0],\"Active\":true}") then 
             local json_ = util.JSONToTable(Text_)        
             for _,k in pairs(json_) do               
                 if type(k) == "table" then 
                     for __,k_ in pairs(k) do                      
-                        config[_][__] = k_                         
+                        config[_][__] = k_                                            
                     end 
                 else 
                     config.Active = k 
                 end     
             end 
-
         end 
     else 
         fun.SaveSetting( "scoreboardsetting.txt")

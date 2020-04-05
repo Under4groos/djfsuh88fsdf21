@@ -7,7 +7,7 @@ config = {}
 PAnels = {}
 
 UnderFrameScoreboard = {}
-    UnderFrameScoreboard.color = Color(145,145,145,0)
+    UnderFrameScoreboard.color = Color(145,145,145,200)
 
 UnderPlayerPanelScoreboard = {}
     UnderPlayerPanelScoreboard.color = Color(22,22,22,200)
