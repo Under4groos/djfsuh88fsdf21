@@ -1,8 +1,12 @@
 
 TAB = TAB or {}
+
+
 function TAB.scoreboardCreationFrame()
+    fun.OpenLastSetting( "scoreboardsetting.txt" ) 
     if config.Active then 
         config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
+        
         TAB.vguiFrame = vgui.Create("UnderFrameScoreboard")
         TAB.vguiFrame:SetSize(config.sizeFrame[1],config.sizeFrame[2] )
         TAB.vguiFrame:MakePopup()
@@ -12,8 +16,10 @@ function TAB.scoreboardCreationFrame()
         return config.Active 
     end 
 end
+
+-- функция для правильного размещения панели ( уебищная )
 function TAB.run()
-    if IsValid( TAB.vguiFrame ) then 
+    if IsValid( TAB.vguiFrame ) or config.Active  then 
         local Pos_ = 0
         local Time = 0
         for _,k in pairs( fun.table ) do
@@ -29,25 +35,18 @@ function TAB.run()
                     fun.table[_+1]:SetPos(0,Pos_ + 10 )   
                 end
             end 
-        end 
-        
-        local SysTime_ = SysTime()
-        if SysTime_ > Time then 
-            local len_ = vgui.Create("DPanel" )
-            len_:SetSize(25,25)
-            len_:SetPos(0,Pos_ + 100)
-            timer.Simple(0.1, function()
-                len_:Remove()     
-            end)
-            Time = SysTime_ + 1
-        end 
+        end      
         Pos_ = 0
     end 
 end
+
+
 function TAB.scoreboardCloseFrame()
     if not ( IsValid(TAB.vguiFrame) ) then return end 
     TAB.vguiFrame:Remove()
 end
+
+-- Добавляем хуки 
 for _ , k in pairs({
     {"ScoreboardShow","ShowScoreboard",TAB.scoreboardCreationFrame},
     {"ScoreboardHide","HideScoreboard",TAB.scoreboardCloseFrame},
@@ -58,3 +57,16 @@ for _ , k in pairs({
 end 
 
 
+concommand.Add("scoreboardug", function( ply, cmd, args )
+    if ply == LocalPlayer() then 
+        if args[1] == "1" then 
+            config.Active = true
+            fun.SaveSetting( "scoreboardsetting.txt" , "Active" , true  )  
+        elseif( args[1] == "0" ) then 
+            config.Active = false 
+            fun.SaveSetting( "scoreboardsetting.txt" , "Active" , false   )
+        else 
+            Msg(" 1 / 0 ") 
+        end        
+    end
+end)

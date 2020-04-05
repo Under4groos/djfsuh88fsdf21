@@ -4,6 +4,8 @@ fun = {}
 fun.table = {}
 fun.ButtonActive = {}
 
+
+
 function fun.font( ... )
     local Table_ = {...}
     surface.CreateFont( "Name", {
@@ -15,7 +17,6 @@ function fun.font( ... )
 end 
 fun.font( font.size  , font.weight )
 
-
 function fun.GetPlayerRank( player )
     if( IsValid( player ) ) then 
         local rank_ = team.GetName(player:Team())
@@ -26,6 +27,14 @@ function fun.GetPlayerRank( player )
         end
     end
 end
+
+function fun.GetSizeTextX( ... )
+    local Table_ = {...}
+    surface.SetFont(Table_[1])
+    local x , y = surface.GetTextSize(Table_[2])
+    return x 
+end
+
 
 function fun.GetTeamColor( ... )
     local Table_ = {...}
@@ -71,3 +80,66 @@ function fun.AddPlayerPanel( ... )
         end      
     end    
 end
+
+
+
+-- function fun.SaveSetting( ... )
+--     local Table_ = {...}
+--     --Table_[1] - Название файла 
+--     local IsValidFile = file.Exists("data/"..Table_[1], "GAME")    
+
+--     if not IsValidFile then
+--         local json_ = util.TableToJSON( config ) 
+--         file.Append( Table_[1] , json_ )
+--     else 
+--         local Text_ = file.Read( Table_[1] , "DATA" )
+--         if string.len(Text_) > 10 then 
+--             local json_ = util.JSONToTable( Text_ )
+--             config.Active = json_["Active"]
+--         end 
+--     end 
+-- end 
+
+
+function fun.SaveSetting( ...  )
+    local Table_ = {...}
+    --Table_[1] - Название файла 
+    local IsValidFile = file.Exists("data/"..Table_[1], "GAME")  
+    print( config[Table_[2]] )  
+    config[Table_[2]] = Table_[3]
+    print( config[Table_[2]] ) 
+    if not IsValidFile then      
+        local json_ = util.TableToJSON( config ) 
+        file.Append( Table_[1] , json_ )
+    else 
+        local json_ = util.TableToJSON( config ) 
+        file.Delete( Table_[1] )
+        file.Append( Table_[1] , json_ )    
+    end 
+end 
+
+function fun.OpenLastSetting( ... ) 
+    local Table_ = {...}
+    local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
+    if IsValidFile then
+        local Text_ = file.Read( Table_[1] , "DATA" )
+        if string.len(Text_) > 10 then 
+            local json_ = util.JSONToTable(Text_)        
+            for _,k in pairs(json_) do               
+                if type(k) == "table" then 
+                    for __,k_ in pairs(k) do 
+                        --## Надо дописать но мне лень ><   
+                        if _ == 1 then 
+
+                        else 
+
+                        end                  
+                    end 
+                else 
+                    config.Active = k 
+                end     
+            end 
+
+        end 
+    end 
+end 
