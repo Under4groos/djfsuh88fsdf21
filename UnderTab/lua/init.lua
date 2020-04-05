@@ -2,12 +2,12 @@
 TAB = TAB or {}
 function TAB.scoreboardCreationFrame()
     if config.Active then 
+        config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
         TAB.vguiFrame = vgui.Create("UnderFrameScoreboard")
         TAB.vguiFrame:SetSize(config.sizeFrame[1],config.sizeFrame[2] )
         TAB.vguiFrame:MakePopup()
         for _,k in pairs( player.GetAll() ) do 
            fun.AddPlayerPanel( TAB.vguiFrame.Scroll , "UnderPlayerPanelScoreboard" , _ , fun.GetSizeX( TAB.vguiFrame ) , k )
-
         end 
         return config.Active 
     end 
@@ -20,7 +20,7 @@ function TAB.run()
             if IsValid(k) then 
                 if _ < 2 then 
                     local x , y = k:GetSize() 
-                    Pos_ = 30 + (Pos_ + y)
+                    Pos_ = 5 + config.sizePanel[1] + (Pos_ + y)
                 else 
                     local x , y = k:GetSize() 
                     Pos_ = 5 + (Pos_ + y)

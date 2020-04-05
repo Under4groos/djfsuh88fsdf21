@@ -3,7 +3,7 @@ function PANEL:Init()
     self:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
     self:Center()
     self.Scroll = vgui.Create( "DScrollPanel", self ) 
-    self.Scroll:Dock( FILL )
+    self.Scroll:SetSize(self:GetWide() + 20,self:GetTall())   
 end
 function PANEL:Add( panel )
     self.Scroll:Add( panel )
