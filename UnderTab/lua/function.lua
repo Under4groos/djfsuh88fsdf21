@@ -54,11 +54,21 @@ function fun.GetSizeX( panel )
     return x or 15
 end 
 
+function fun.addPanelInfoCount( ... )
+    if not IsValid( Table_[1] ) then return end 
+    local parent = Table_[1]
+
+
+
+
+
+
+end 
+
 --# 1 table 2 player 3 pos 
 function fun.AddPlayerPanel( ... )
     local Table_ = {...}
     local Size_ = 0
-   -- PrintTable(Table_)
     if IsValid( Table_[1] ) then 
         local panel = vgui.Create( Table_[2] , Table_[1] )
         local x = Table_[4] or 10 
@@ -82,14 +92,12 @@ function fun.AddPlayerPanel( ... )
 end
 
 
-function fun.SaveSetting( ...  )
+function fun.SaveSetting( ... )
     local Table_ = {...}
     --Table_[1] - Название файла 
     local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
-    if Table_[3] then  
-        print( config[Table_[2]] )  
-        config[Table_[2]] = Table_[3]
-        print( config[Table_[2]] ) 
+    if Table_[3] then         
+        config[Table_[2]] = Table_[3]     
     end 
     if not IsValidFile then      
         local json_ = util.TableToJSON( config ) 
@@ -101,7 +109,7 @@ function fun.SaveSetting( ...  )
     end 
 end 
 
-function fun.ResetSetting( ...  )
+function fun.ResetSetting( ... )
     local Table_ = {...}
     local IsValidFile = file.Exists("data/"..Table_[1], "GAME") 
     config.Active = true        

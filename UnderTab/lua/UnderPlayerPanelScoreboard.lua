@@ -27,7 +27,6 @@ function PANEL:Init()
         draw.RoundedBox(0,0,0,w,h, UnderPlayerPanelScoreboard.colorBackground ) 
     end  
     self.rank:SetTextColor( Color(0,0,0,255) ) 
-
 end
 
 function PANEL:SetPalayer( player_ , size )
@@ -56,12 +55,18 @@ function PANEL:SetPalayer( player_ , size )
             gui.OpenURL("https://steamcommunity.com/linkfilter/?url=steamcommunity.com/profiles/"..player_:SteamID64().."/") 	
         end 
     end
+    
+
 
 end 
 function PANEL:IMGSetSize( size )
     self.Avatar:SetSize( size , size )
     self.buttonUrl:SetSize( size , size )
 end 
+
+
+
+
 function PANEL:Paint( w, h )
     draw.RoundedBox( 0, 0, 0, w, h, UnderPlayerPanelScoreboard.color or  Color(127,255,255,255) )
 end
