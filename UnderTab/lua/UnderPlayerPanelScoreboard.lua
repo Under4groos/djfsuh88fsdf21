@@ -162,7 +162,7 @@ function PANEL:Paint( w, h )
         ColorAdd = 30
     else 
         ColorAdd = 0 
-    end 
+    end
     local color_ = UnderPlayerPanelScoreboard.color
     draw.RoundedBox( 0, 0, 0, w, h, Color( color_.r + ColorAdd, color_.g + ColorAdd , color_.b + ColorAdd , color_.a ) or  Color(127,255,255,255) )
 end
