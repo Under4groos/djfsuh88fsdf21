@@ -5,9 +5,9 @@ function TAB.scoreboardCreationFrame()
     fun.OpenLastSetting( file_.folderName_.."scoreboardsetting.txt" ) 
     if config.Active then  
         TAB.vguiFrame = vgui.Create("UnderFrameScoreboard")
-        TAB.vguiFrame:SetSize(config.sizeFrame[1],config.sizeFrame[2] )
-        TAB.vguiFrame:MakePopup()
         TAB.vguiFrame:ScrollSetSize()
+        TAB.vguiFrame:Center()
+        TAB.vguiFrame:MakePopup()
         for _,k in pairs( player.GetAll() ) do 
            fun.AddPlayerPanel( TAB.vguiFrame.Scroll , "UnderPlayerPanelScoreboard" , _ , fun.GetSizeX( TAB.vguiFrame ) , k )
         end 
@@ -17,7 +17,7 @@ end
 
 -- функция для правильного размещения панелей ( уебищная система )
 function TAB.run()
-    if IsValid( TAB.vguiFrame ) or config.Active  then 
+    if IsValid( TAB.vguiFrame ) or config.Active  then  
         local Pos_ = 0
         local Time = 0
         for _,k in pairs( fun.PanelsButton ) do

@@ -73,13 +73,13 @@ function PANEL:SetPalayer( player_ , size )
     end  
     self.count_prop:SetTextColor( Color(0,0,0,255) ) 
 
-    -- count prop 
+    -- count npc 
     local text_ = stringName_[2][1] .. tostring(player_:GetCount( stringName_[2][2] ))
     x = x + fun.GetSizeTextX( "Name" , text_  )
     self.count_npc = vgui.Create( "DButton", self ) 
     self.count_npc:SetText( text_ )
     self.count_npc:SetFont("Name")
-    self.count_npc:SetPos( x , config.sizePanel[2] - 25 )					
+    self.count_npc:SetPos( x - 10 , config.sizePanel[2] - 25 )					
     self.count_npc:SetSize(  x  , 30 )					
     self.count_npc.DoClick = function()				
         MsgC( Color( 255,255,255,255) , "Name: \""..player_:Name() .. "\" "..text_.."\n" )		
@@ -89,6 +89,24 @@ function PANEL:SetPalayer( player_ , size )
     end  
     self.count_npc:SetTextColor( Color(0,0,0,255) ) 
 
+
+    local text_ = stringName_[3][1] .. tostring(player_:GetCount( stringName_[3][2] ))
+    
+    self.count_ragdolls = vgui.Create( "DButton", self ) 
+    self.count_ragdolls:SetFont("Name") 
+    self.count_ragdolls:SetText( text_ )
+       
+    x = 8 + x + fun.GetSizeTextX( "Name" , text_  )
+    self.count_ragdolls:SetSize(  x  , 30 )	
+    self.count_ragdolls:SetPos( x , config.sizePanel[2] - 25 )					
+    self.count_ragdolls:SetSize(  x/2 + 20  , 30 )					
+    self.count_ragdolls.DoClick = function()				
+        MsgC( Color( 255,255,255,255) , "Name: \""..player_:Name() .. "\" "..text_.."\n" )		
+    end
+    self.count_ragdolls.Paint = function(self,w,h)
+        draw.RoundedBox(0,0,0,w,h, Color(200,200,200,255) ) 
+    end  
+    self.count_ragdolls:SetTextColor( Color(0,0,0,255) ) 
 
 end 
 function PANEL:IMGSetSize( size )

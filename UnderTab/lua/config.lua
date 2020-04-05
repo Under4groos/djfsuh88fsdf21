@@ -2,13 +2,14 @@ config = {}
     config.Active = true        
     config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
     config.sizePanel = {35 , 75 }
+    config.posFrame = { ScrW() /2 , ScrH()/2}
   
 file_ = {}
     file_.folderName = "data/UnderScoreboard/"
     file_.folderName_ = "UnderScoreboard/"
 PAnels = {}
 
-stringName_ = { {"Prop " ,"props" } , {"Npc "  , "npcs" }  }
+stringName_ = { {"Prop: " ,"props" } , {"Npc: "  , "npcs" } , { "Ragdolls: " , "ragdolls"} }
 
     
 UnderFrameScoreboard = {}

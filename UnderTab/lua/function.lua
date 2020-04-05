@@ -119,6 +119,7 @@ function fun.ResetSetting( ... )
     config.Active = true        
     config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
     config.sizePanel = {35 , 75 }
+    config.posFrame = { ScrW() /2 , ScrH()/2}
     if not IsValidFile then      
         local json_ = util.TableToJSON( config ) 
         file.Append( Table_[1] , json_ )
