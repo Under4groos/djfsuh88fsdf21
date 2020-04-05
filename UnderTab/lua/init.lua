@@ -6,6 +6,7 @@ function TAB.scoreboardCreationFrame()
     if config.Active then  
         TAB.vguiFrame = vgui.Create("UnderFrameScoreboard")
         TAB.vguiFrame:ScrollSetSize()
+        TAB.vguiFrame:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
         TAB.vguiFrame:Center()
         TAB.vguiFrame:MakePopup()
         for _,k in pairs( player.GetAll() ) do 
