@@ -160,7 +160,7 @@ function PANEL:SetPalayer( player_ , size )
 
     -- ULX TIME 
     if GetConVar( "utime_enable" ) then
-        if not GetConVar( "utime_enable" ):GetBool() then  return end 
+       -- if not GetConVar( "utime_enable" ):GetBool() then  return end 
         self.ulxTime = vgui.Create( "DLabel", self ) 
         self.ulxTime:SetFont("Name") 
         self:SetText( "" )
