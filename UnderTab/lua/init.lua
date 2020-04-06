@@ -2,7 +2,8 @@
 TAB = TAB or {}
 
 function TAB.scoreboardCreationFrame()
-    fun.OpenLastSetting( file_.folderName_.."scoreboardsetting.txt" ) 
+    fun.OpenLastSettingConfig( file_.folderName_.."scoreboardsetting.txt" ) 
+    fun.OpenLastSettingFont(file_.folderName_.."scoreboardfont.txt")
     if config.Active then  
         TAB.vguiFrame = vgui.Create("UnderFrameScoreboard")
         TAB.vguiFrame:ScrollSetSize()
@@ -16,7 +17,7 @@ function TAB.scoreboardCreationFrame()
     end 
 end
 
--- функция для правильного размещения панелей ( уебищная система )
+-- функция для размещения панелей ( уебищная система )
 function TAB.run()
     if IsValid( TAB.vguiFrame ) or config.Active  then  
         local Pos_ = 0
@@ -68,20 +69,60 @@ concommand.Add("scoreboardug", function( ply, cmd, args )
     end
 end)
 
-concommand.Add("scoreboardug_size", function( ply, cmd, args )
+concommand.Add("scoreboardug_sizePanel", function( ply, cmd, args )
     if ply == LocalPlayer() then 
         if args[1] and args[2] then
-            fun.SaveSetting( 
-                file_.folderName_.. "scoreboardsetting.txt" , 
-                "sizeFrame" , 
-                { tonumber(args[1]) , tonumber(args[2])} 
-                )
+            if (string.len(args[1]) >= 2) and (string.len(args[2]) >= 2) then  
+                if type( tonumber(args[1]) ) == "number" and type( tonumber(args[2]) ) == "number" then   
+                    fun.SaveSetting( file_.folderName_.. "scoreboardsetting.txt" , config, "sizePanel" , { tonumber(args[1]) , tonumber(args[2])} )
+                end 
+            end 
         end 
     end
 end)
 
 concommand.Add("scoreboardug_reset", function( ply, cmd, args )
     if ply == LocalPlayer() then 
-        fun.ResetSetting(  file_.folderName_.. "scoreboardsetting.txt"  )
+        config.Active = true        
+        config.sizeFrame = {ScrW() * 0.75, ScrH() * 0.75}
+        config.sizePanel = {20 , 75 }
+        config.posFrame = { ScrW() /2 , ScrH()/2}
+        fun.ResetSetting(  file_.folderName_.. "scoreboardsetting.txt" , config )
+        
+        font.size = 15
+        font.weight = 900
+        fun.ResetSetting(  file_.folderName_.. "scoreboardfont.txt" , font )
     end
+end)
+concommand.Add("scoreboardug_settextsize", function( ply, cmd, args )
+    if ply == LocalPlayer() then 
+        if args[1] then 
+            if string.len(args[1]) >= 2 then             
+                if type( tonumber(args[1]) ) == "number" then 
+                    if tonumber(args[1]) >= 10 then 
+                        print( tonumber(args[1]) )
+                        fun.SaveSetting( file_.folderName_.."scoreboardfont.txt", font , "size", tonumber(args[1]) )
+                    else 
+                        fun.SaveSetting( file_.folderName_.."scoreboardfont.txt", font , "size", 10 )
+                    end 
+                end 
+            end 
+        end 
+    end 
+end)
+concommand.Add("scoreboardug_settextweight", function( ply, cmd, args )
+    if ply == LocalPlayer() then 
+        if args[1] then 
+            if string.len(args[1]) >= 2 then             
+                if type( tonumber(args[1]) ) == "number" then 
+                    if tonumber(args[1]) >= 100 then 
+                        print( tonumber(args[1]) )
+                        fun.SaveSetting( file_.folderName_.."scoreboardfont.txt", font , "weight", tonumber(args[1]) )
+                    else 
+                        fun.SaveSetting( file_.folderName_.."scoreboardfont.txt", font , "weight", 100 )
+                    end 
+                end 
+            end 
+        end 
+    end 
 end)

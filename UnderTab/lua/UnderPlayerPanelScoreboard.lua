@@ -14,14 +14,14 @@ function PANEL:Init()
     self.buttonUrl:SetSize( self.Avatar:GetWide() , self.Avatar:GetTall() )				
     self.buttonUrl.Paint = function(self,w,h) end
 
-    self.name = vgui.Create( "DLabel", self ) 
+    self.name = vgui.Create( "DButton", self ) 
     self.name:SetFont("Name") 
     self.name.Paint = function(self,w,h)
         draw.RoundedBox(0,0,0,w,h, UnderPlayerPanelScoreboard.colorBackground ) 
     end  
     self.name:SetTextColor( Color(0,0,0,255) ) 
 
-    self.rank = vgui.Create( "DLabel", self ) 
+    self.rank = vgui.Create( "DButton", self ) 
     self.rank:SetFont("Name") 
     self.rank.Paint = function(self,w,h)
         draw.RoundedBox(0,0,0,w,h, UnderPlayerPanelScoreboard.colorBackground ) 
@@ -33,7 +33,7 @@ function PANEL:SetPalayer( player_ , size )
     local PosX = 0 
     local x = 0
     local IsMuted_ = false  
-    
+    local PANELparent = self
     self.Avatar:SetPlayer( player_ , size )
     self.Avatar:SetSize( size , size )
     self.buttonUrl:SetSize( size , size )
@@ -56,6 +56,21 @@ function PANEL:SetPalayer( player_ , size )
     self.name:SetPos( 5 + size,0 )
     self.name.Paint = function(self,w,h)
         draw.RoundedBox(0,0,0,w,h, Color_rank ) 
+    end 
+    self.name.DoClick = function()
+        local SteamID_ = ""
+        local SteamID64_ = ""
+        local Rank_ = ""
+        if player_:IsBot() then 
+            SteamID_ = " - "
+            SteamID65_ = " - "
+            Rank_ = " - "   
+        else
+            SteamID_ = tostring(player_:SteamID())
+            SteamID65_ = tostring(player_:SteamID64())
+            Rank_ = fun.GetPlayerRank( player_ ) 
+        end
+        MsgC( Color( 255,255,255,255) , "\nName: \""..player_:Name() .."\"\n  Rank: "..Rank_.. "\n  SteamID: "..SteamID_.."\n  SteamID64: " .. SteamID65_.."\n" )		
     end 
 
     local Name_rank = fun.GetPlayerRank( player_ )
@@ -143,8 +158,26 @@ function PANEL:SetPalayer( player_ , size )
     self.count_vehicles:SetTextColor( Color(0,0,0,255) ) 
     PosX = PosX + x + 30 
 
-
-
+    -- ULX TIME 
+    if GetConVar( "utime_enable" ) then
+        if not GetConVar( "utime_enable" ):GetBool() then  return end 
+        self.ulxTime = vgui.Create( "DLabel", self ) 
+        self.ulxTime:SetFont("Name") 
+        self:SetText( "" )
+        self.ulxTime.Paint = function(self,w,h)
+            draw.RoundedBox(0,0,0,w,h, UnderPlayerPanelScoreboard.colorBackgroundTime ) 
+            if IsValid( self ) then
+                local time_ = fun.GetUlXtime( player_ )
+                if time_ != "-" then 
+                    local size_ = fun.GetSizeTextX( "Name" ,time_ )
+                    self:SetText("   "..time_)
+                    self:SetPos( PANELparent:GetWide() - fun.GetSizeTextX( "Name" ,time_ )  - 20, 0 )
+                    self:SetSize(size_ + 20 , font.size + 5  )
+                end 
+            end 
+        end  
+        self.ulxTime:SetTextColor( Color(0,0,0,255) ) 
+   end 
 end 
 function PANEL:IMGSetSize( size )
     self.name:SetPos( 5 + size,0 )
