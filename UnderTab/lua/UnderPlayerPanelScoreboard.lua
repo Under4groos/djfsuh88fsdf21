@@ -74,7 +74,7 @@ function PANEL:SetPalayer( player_ , size )
     end 
 
     local Name_rank = fun.GetPlayerRank( player_ )
-    x = fun.GetSizeTextX( "Name" , "  Rank: "..Name_rank )
+    x = fun.GetSizeTextX( "Name" , " Rank: "..Name_rank )
     self.rank:SetSize(x + 10,font.size + 5)	
     self.rank:SetPos( (20+size) + self.name:GetWide() ,0 )
     self.rank.Paint = function(self,w,h) draw.RoundedBox(0,0,0,w,h,Color_rank) end
@@ -170,8 +170,8 @@ function PANEL:SetPalayer( player_ , size )
                 local time_ = fun.GetUlXtime( player_ )
                 if time_ != "-" then 
                     local size_ = fun.GetSizeTextX( "Name" ,time_ )
-                    self:SetText("   "..time_)
-                    self:SetPos( PANELparent:GetWide() - fun.GetSizeTextX( "Name" ,time_ )  - 20, 0 )
+                    self:SetText("  "..time_)
+                    self:SetPos( PANELparent:GetWide() - fun.GetSizeTextX( "Name" ,time_ )  - 30, 0 )
                     self:SetSize(size_ + 20 , font.size + 5  )
                 end 
             end 
